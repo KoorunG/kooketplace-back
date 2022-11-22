@@ -21,30 +21,26 @@ import java.time.LocalDate;
 public class User {
 
     @EmbeddedId
-    private UserId userId;
-
-    private String password;
-
+    private UserId userId;      // 로그인ID (PK)
+    private String password;    // 패스워드
     @Enumerated(EnumType.STRING)
-    private Role role;
+    private Role role;          // 권한 (ROLE_USER, ROLE_ADMIN)
+    private String name;        // 유저이름
 
-    private String name;
-
-    private LocalDate birthDate;
+    private LocalDate birthDate; // 생년월일
+    @Embedded
+    private PhoneNumber phoneNumber; // 전화번호
 
     @Embedded
-    private PhoneNumber phoneNumber;
-
-    @Embedded
-    private Address address;
-
-    private Boolean isSocialLogin;
+    private Address address;        // 주소
 
     @Builder
-    public User(UserId userId, String password, String name) {
+    public User(UserId userId, String password, String name, PhoneNumber phoneNumber, LocalDate birthDate) {
         this.userId = userId;
         this.password = password;
-        this.role = Role.ROLE_USER;
+        this.role = Role.ROLE_USER;     // 초기가입 시 USER 권한으로 설정
         this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.birthDate = birthDate;
     }
 }

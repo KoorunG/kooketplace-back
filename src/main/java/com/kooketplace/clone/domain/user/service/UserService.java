@@ -5,7 +5,7 @@ import com.kooketplace.clone.domain.user.entity.UserId;
 import com.kooketplace.clone.domain.user.repository.UserRepository;
 import com.kooketplace.clone.domain.user.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,20 +22,23 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
     @Transactional
     public UserId join(UserCreateRequest request) {
 
-        UserId userId = new UserId(request.getUserId());
-        String rawPassword = request.getPassword();
-        String encPassword = passwordEncoder.encode(rawPassword);
-        String name = request.getName();
+//        UserId userId = request.getUserId();
+//        String rawPassword = request.getPassword();
+//        String encPassword = passwordEncoder.encode(rawPassword);
+//        String name = request.getName();
+//
+//        User user = User.builder()
+//                .userId(userId)
+//                .password(encPassword)
+//                .name(name)
+//                .build();
 
-        User user = User.builder()
-                .userId(userId)
-                .password(encPassword)
-                .name(name)
-                .build();
+        User user = request.toEntity();
+        UserId userId = user.getUserId();
 
         userRepository.save(user);
 

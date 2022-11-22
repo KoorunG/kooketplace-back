@@ -11,7 +11,7 @@ import org.springframework.web.filter.CorsFilter;
  * FileName : CorsConfig
  * Author : Koorung
  * Date : 2022년 11월 22일
- * Description : cors를 설정하는 클래스
+ * Description : Cors 관련 설정 클래스
  */
 @Configuration
 public class CorsConfig {

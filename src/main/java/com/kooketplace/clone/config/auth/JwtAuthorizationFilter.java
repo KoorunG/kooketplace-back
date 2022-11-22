@@ -39,7 +39,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
         String authorization = request.getHeader("Authorization");
 
         // JWT 토큰을 가지고 있는지 검사 - 가지고 있지 않다면 다음 필터로 넘어가고 return 처리
-        if(!StringUtils.hasText(authorization) || !StringUtils.startsWithIgnoreCase(authorization, "Bearer")) {
+        if(!StringUtils.hasText(authorization) || !StringUtils.startsWithIgnoreCase(authorization, "Bearer ")) {
             chain.doFilter(request, response);
             return;
         }

@@ -3,7 +3,9 @@ package com.kooketplace.clone.domain.user.entity;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.util.StringUtils;
 
+import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
 /**
@@ -19,15 +21,24 @@ import javax.persistence.Embeddable;
 @NoArgsConstructor
 public class PhoneNumber {
 
-    private Integer areaNumber;
-    private Integer middleNumber;
-    private Integer endNumber;
+    @Column(name = "phone_number")
+    private String storedNumber;
 
-    /**
-     * 전체 전화번호를 반환받는 메소드
-     * @return
-     */
-    public String changeFullNumber() {
-        return this.areaNumber + "-" + this.middleNumber + "-" + this.endNumber;
+    public PhoneNumber(String storedNumber) {
+
+        // 하이푼이 포함되어있다면 제거
+        if (storedNumber.contains("-")) {
+            this.storedNumber = StringUtils.replace(storedNumber, "-", "");
+            return;
+        }
+
+        // 공백이 포함되어있다면 제거
+        if (StringUtils.containsWhitespace(storedNumber)) {
+            this.storedNumber = StringUtils.trimAllWhitespace(storedNumber);
+            return;
+        }
+
+        // 이외엔 그대로 출력
+        this.storedNumber = storedNumber;
     }
 }

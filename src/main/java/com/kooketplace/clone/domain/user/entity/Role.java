@@ -8,5 +8,5 @@ package com.kooketplace.clone.domain.user.entity;
  * Description :
  */
 public enum Role {
-    ROLE_GUEST, ROLE_USER, ROLE_ADMIN
+   ROLE_USER, ROLE_ADMIN
 }
