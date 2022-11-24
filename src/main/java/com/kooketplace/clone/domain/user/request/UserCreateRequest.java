@@ -4,15 +4,14 @@ import com.kooketplace.clone.domain.embedded.Address;
 import com.kooketplace.clone.domain.embedded.PhoneNumber;
 import com.kooketplace.clone.domain.user.entity.User;
 import com.kooketplace.clone.domain.user.entity.UserId;
+import com.kooketplace.clone.exception.customvalidator.AlphaAndNumeric;
+import com.kooketplace.clone.exception.customvalidator.Special;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.internal.engine.constraintvalidation.ConstraintValidatorManagerImpl;
-import org.springframework.util.StringUtils;
 
-import javax.validation.Constraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -31,9 +30,11 @@ import java.time.format.DateTimeFormatter;
 public class UserCreateRequest {
     @NotNull(message = "아이디는 반드시 입력해야합니다.")
     @Length(min = 5, max = 11, message = "아이디는 5자이상, 11자이하여야 합니다.")
+    @AlphaAndNumeric(message = "영문자 및 숫자는 반드시 포함되어야 합니다.")
     private String userId;
     @NotEmpty(message = "비밀번호는 반드시 입력해야합니다.")
     @Length(min = 8, message = "비밀번호는 최소 8자 이상이어야 합니다.")
+    @Special(message = "특수문자는 반드시 포함되어야 합니다.")
     private String password;
     @NotEmpty(message = "이름은 반드시 입력해야합니다.")
     private String name;
@@ -41,6 +42,8 @@ public class UserCreateRequest {
     @NotEmpty(message = "이메일은 반드시 입력해야합니다.")
     @Email(message = "올바른 형식의 이메일을 입력해야합니다.", regexp = "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$")
     private String email;
+
+    @com.kooketplace.clone.exception.customvalidator.PhoneNumber
     private String phoneNumber;
     private LocalDate birthDate;
     private Address address;

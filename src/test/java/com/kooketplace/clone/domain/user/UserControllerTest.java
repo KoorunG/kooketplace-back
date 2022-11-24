@@ -50,6 +50,17 @@ class UserControllerTest {
     }
 
     @Test
+    @DisplayName("아이디가 영문자 및 숫자를 반드시 포함해야함")
+    void test4() throws Exception {
+        mockMvc.perform(post("/join")
+                        .contentType(APPLICATION_JSON)
+                        .characterEncoding(UTF_8)
+                        .content(createUserCreateRequest("koorung", "test1234", "onlyzion10@naver.com")))
+                .andExpect(status().isBadRequest())
+                .andDo(print());
+    }
+
+    @Test
     @DisplayName("비밀번호를 입력하지 않으면 에러 발생")
     void test2() throws Exception {
         //given
@@ -68,7 +79,7 @@ class UserControllerTest {
         mockMvc.perform(post("/join")
                         .contentType(APPLICATION_JSON)
                         .characterEncoding(UTF_8)
-                        .content(createUserCreateRequest("test1234", "test1234", "test@naver.com")))
+                        .content(createUserCreateRequest("test1234", "test1234!", "test@naver.com")))
                 .andExpect(status().isOk())
                 .andDo(print());
     }
