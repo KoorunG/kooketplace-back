@@ -20,28 +20,25 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class UserService {
-
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     @Transactional
     public UserId join(UserCreateRequest request) {
-
-//        UserId userId = request.getUserId();
-//        String rawPassword = request.getPassword();
-//        String encPassword = passwordEncoder.encode(rawPassword);
-//        String name = request.getName();
-//
-//        User user = User.builder()
-//                .userId(userId)
-//                .password(encPassword)
-//                .name(name)
-//                .build();
-
+        // 요청을 엔티티로 변환
         User user = request.toEntity();
-        UserId userId = user.getUserId();
-
+        // 패스워드 인코딩
+        user.encodePassword(passwordEncoder);
+        // DB에 엔티티 저장
         userRepository.save(user);
+        // 식별자 리턴
+        return user.getUserId();
+    }
 
-        return userId;
+    public void savePoint(User user, int point) {
+        user.getPoint().plusPoint(point);
+    }
+
+    public void usePoint(User user, int point) {
+        user.getPoint().minusPoint(point);
     }
 }

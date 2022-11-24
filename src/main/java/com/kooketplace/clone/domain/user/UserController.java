@@ -4,9 +4,12 @@ import com.kooketplace.clone.domain.user.entity.UserId;
 import com.kooketplace.clone.domain.user.request.UserCreateRequest;
 import com.kooketplace.clone.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 /**
  * PackageName : com.kooketplace.clone.domain.user
@@ -27,8 +30,13 @@ public class UserController {
      * @return 유저 식별자
      */
     @PostMapping("/join")
-    public String join(@RequestBody UserCreateRequest request) {
+    public String join(@RequestBody @Valid UserCreateRequest request) {
         UserId saved = userService.join(request);
         return saved.toString();
+    }
+
+    @GetMapping("/user/test")
+    public String test() {
+        return "테스트 호출 성공!";
     }
 }

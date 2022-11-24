@@ -1,4 +1,4 @@
-package com.kooketplace.clone.domain.user.entity;
+package com.kooketplace.clone.domain.embedded;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +13,7 @@ import javax.persistence.Embeddable;
  * FileName : PhoneNumber
  * Author : Koorung
  * Date : 2022년 11월 22일
- * Description :
+ * Description : 휴대전화번호에 대한 임베디드 클래스
  */
 @Getter
 @Embeddable
@@ -25,6 +25,11 @@ public class PhoneNumber {
     private String storedNumber;
 
     public PhoneNumber(String storedNumber) {
+
+        // null값이면 객체생성 X
+        if(!StringUtils.hasText(storedNumber)){
+            return;
+        }
 
         // 하이푼이 포함되어있다면 제거
         if (storedNumber.contains("-")) {

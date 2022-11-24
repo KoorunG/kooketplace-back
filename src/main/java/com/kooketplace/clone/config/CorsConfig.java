@@ -23,6 +23,7 @@ public class CorsConfig {
         config.addAllowedOriginPattern("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
+        config.addExposedHeader("Authorization");
         source.registerCorsConfiguration("/**", config);    // 모든 요청에 대해 적용
         return new CorsFilter(source);
     }

@@ -3,6 +3,7 @@ package com.kooketplace.clone.domain.user.entity;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
